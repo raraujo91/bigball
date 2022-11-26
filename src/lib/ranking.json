@@ -1,0 +1,19 @@
+{
+    "data": [
+        {
+            "userId": 1,
+            "name": "Naruto",
+            "totalPoints": 10
+        },
+        {
+            "userId": 2,
+            "name": "Gohan",
+            "totalPoints": 5
+        },
+        {
+            "userId": 3,
+            "name": "Tai",
+            "totalPoints": 6
+        }
+    ]
+}

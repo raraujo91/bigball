@@ -1,0 +1,40 @@
+{
+    "data": [
+        {
+            "matchId": 1,
+            "dateTime": "2022-11-20T13:00:00Z",
+            "finished": true,
+            "homeId": "1",
+            "awayId": "2",
+            "homeScore": 0,
+            "awayScore": 2,
+            "matchDetails": {
+                "yellowCards": 4,
+                "redCards": 0,
+                "cornerKicks": 8,
+                "headerGoals": 0,
+                "freeKickGoals": 0,
+                "penaltyKickGoal": 1,
+                "longRangeGoal": 1
+            }
+        },
+        {
+            "matchId": 2,
+            "dateTime": "2022-11-20T13:00:00Z",
+            "finished": true,
+            "homeId": "3",
+            "awayId": "4",
+            "homeScore": 1,
+            "awayScore": 1,
+            "matchDetails": {
+                "yellowCards": 4,
+                "redCards": 0,
+                "cornerKicks": 8,
+                "headerGoals": 0,
+                "freeKickGoals": 0,
+                "penaltyKickGoal": 1,
+                "longRangeGoal": 1
+            }
+        }
+    ]
+}

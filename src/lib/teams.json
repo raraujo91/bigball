@@ -1,0 +1,40 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "name": "Catar",
+            "flag": "🇶🇦",
+            "group": "A"
+        },
+        {
+            "id": "2",
+            "name": "Equador",
+            "flag": "🇪🇨",
+            "group": "A"
+        },
+        {
+            "id": "3",
+            "name": "Senegal",
+            "flag": "🇸🇳",
+            "group": "A"
+        },
+        {
+            "id": "4",
+            "name": "Holanda",
+            "flag": "🇳🇱",
+            "group": "A"
+        },
+        {
+            "id": "5",
+            "name": "Inglaterra",
+            "flag": "🇬🇧",
+            "group": "B"
+        },
+        {
+            "id": "6",
+            "name": "Irã",
+            "flag": "🇮🇷",
+            "group": "B"
+        }
+    ]
+}
