@@ -25,7 +25,7 @@ export const actions = {
         const avoidTooManyRequests = (msg) => {
             return new Promise(resolve => {
                 console.log(`[${new Date().toISOString()}] --- ${msg} ---`)
-                setTimeout(resolve, 1500);
+                setTimeout(resolve, 200);
             });
         }
 
