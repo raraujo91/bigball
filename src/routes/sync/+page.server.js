@@ -5,7 +5,7 @@ export async function load({ params, fetch }) {
 
     try {
         let listMatches = await directus.items('matches').readByQuery({
-            limit: -1, 
+            limit: -1,
             fields: ['*.*']
         });
 
@@ -18,10 +18,16 @@ export async function load({ params, fetch }) {
 }
 
 export const actions = {
-    default: async({ request, fetch }) => {
+    default: async ({ request, fetch }) => {
 
         let data = await request.formData();
         let matchId = data.get('match');
+        const avoidTooManyRequests = (msg) => {
+            return new Promise(resolve => {
+                console.log(`[${new Date().toISOString()}] --- ${msg} ---`)
+                setTimeout(resolve, 150);
+            });
+        }
 
         try {
 
@@ -30,8 +36,11 @@ export const actions = {
                     "matchId": matchId
                 }
             });
+            
+            await avoidTooManyRequests("Reading bets");
 
-            let { data: bets } = await requestBets;
+            let { data: bets } = requestBets;
+
 
             let syncedBets = await bets.filter(bet => bet.isSynced != true);
 
@@ -40,44 +49,34 @@ export const actions = {
             }
 
             let requestUsers = await directus.items('users').readByQuery({ limit: -1 });
+            
+            await avoidTooManyRequests("Reading users");
 
             let { data: users } = requestUsers;
 
-            let userPointsForThisMatch = await Promise.all(
-                syncedBets.map(async (bet) => {
-                    try {
-                        let requestPoints = await fetch('/api/points', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                matchId,
-                                userId: bet.userId
-                            })
-                        });
+            async function delayedApiCall(bets) {
+                let userPointCalculation = [];
+                for(let bet of bets) {
+                    let userName = users.find(user => user.id == bet.userId).name;
+                    await avoidTooManyRequests(`Calculating points from ${userName}`);
+                    let requestPoints = await fetch('/api/points', { method: 'POST', body: JSON.stringify({ matchId, userId: bet.userId }) });
+                    let points = await requestPoints.json();
+                    await avoidTooManyRequests(`Saving bets from ${userName}`);
+                    await directus.items('bets').updateOne(bet.id, { totalPoints: points.totalPoints, isSynced: true });
+                    userPointCalculation.push({ matchId, userName, userId: bet.userId, totalPoints: points.totalPoints });
+                }
 
-                        let userName = users.find(user => user.id == bet.userId).name;
+                return userPointCalculation;
+            };
 
-                        let points = await requestPoints.json();
+            let userPointsForThisMatch = await delayedApiCall(syncedBets);
 
-                        await directus.items('bets').updateOne(bet.id, {
-                            totalPoints: points.totalPoints,
-                            isSynced: true
-                        })
-
-                        return { matchId, userName, userId: bet.userId, totalPoints: points.totalPoints };
-                    } catch (err) {
-                        console.log(err);
-                    }
-                })
-            );
-
-            let sortedResults = userPointsForThisMatch.sort((a, b) => b.totalPoints - a.totalPoints); 
+            let sortedResults = userPointsForThisMatch.sort((a, b) => b.totalPoints - a.totalPoints);
 
             return { matchId, count: syncedBets.length, results: sortedResults, success: true };
 
         } catch (err) {
-
             console.log(err);
-
         }
     }
 }

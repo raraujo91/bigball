@@ -1,7 +1,6 @@
 <script>
     export let data, form;
     let { matches } = data;
-    console.log("f?r", form);
 </script>
 
 <div class="w-full m-auto flex justify-center">

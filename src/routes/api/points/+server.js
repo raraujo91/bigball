@@ -1,6 +1,4 @@
 import { json, error } from "@sveltejs/kit";
-
-import { bets, matches } from "$lib/db/mock";
 import { directus } from "$lib/db/directus";
 
 const REGULAR_SCORE = {
