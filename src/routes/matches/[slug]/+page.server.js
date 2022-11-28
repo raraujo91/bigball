@@ -3,26 +3,38 @@ import { error } from "@sveltejs/kit";
 
 export async function load({ params }) {
 
+    
     try {
-        let bets = await directus.items('bets').readByQuery({
-            fields: ['*.*'],
-            filter: {
-                matchId: {
-                    _eq: params.slug
-                }
-            }
+        
+        let result = {};
+        
+        let match = await directus.items('matches').readOne(params.slug, {
+            fields: ['*.*']
         });
 
-        let result = { match: {
-            ...bets.data[0].matchId,
-            homeId: bets.data[0].homeId,
-            awayId: bets.data[0].awayId
-        } }
+        result = { match };
 
-        if(new Date().toISOString() > bets.data[0].matchId.dateTime) {
-            Object.assign(result, {
-                bets: bets.data
-            })
+        if(new Date().toISOString() > match.dateTime) {
+            let bets = await directus.items('bets').readByQuery({
+                fields: ['*.*'],
+                filter: {
+                    matchId: {
+                        _eq: params.slug
+                    }
+                }
+            });
+    
+            result = { match: {
+                ...bets.data[0].matchId,
+                homeId: bets.data[0].homeId,
+                awayId: bets.data[0].awayId
+            } }
+    
+            if(new Date().toISOString() > bets.data[0].matchId.dateTime) {
+                Object.assign(result, {
+                    bets: bets.data
+                })
+            }
         }
 
         return { result }
