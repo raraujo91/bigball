@@ -31,8 +31,8 @@
         </div>
         <div class="w-full py-2 text-center text-lg font-bold">
             {#each Object.keys(BET_ICONS) as icon}
-                <span class="{getBaseValue(bet, icon) == bet[icon] ? "bg-emerald-500 border-emerald-900" : "bg-red-500 border-red-900"} inline-flex items-baseline align-middle my-1 mx-1 px-2 border rounded-full">
-                    {BET_ICONS[icon]} {bet[icon] == "over" ? "🔼" : "🔽" } 
+                <span class="{bet.matchId.finished == false ? "bg-amber-300 border-amber-800 opacity-90 text-slate-900" : getBaseValue(bet, icon) == bet[icon] ? "bg-emerald-500 border-emerald-900" : "bg-red-500 border-red-900"} inline-flex items-baseline align-middle my-1 mx-1 px-2 border rounded-full">
+                    {BET_ICONS[icon]} {bet[icon] == "over" ? "🔼" : bet[icon] == "under" ? "🔽" : "😴" } 
                 </span>
             {/each}
         </div>
