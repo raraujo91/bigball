@@ -6,30 +6,30 @@
     let betLockDueDate = Date.now() > new Date(match.dateTime);
     
     let overUnderScores = scores.overUnder;
-    console.log("ous-container", overUnderScores);
 
     $: console.log(helperCounter);
 
-    $: helperCounter = [];
-    $: betAmountValidation = helperCounter.length >= 5;
+    $: helperCounter = 0;
+    $: betAmountValidation = helperCounter >= 5;
 
-    const eventHandler = (event) => {
+    const inputHandler = (event) => {
+        event.target.value = ""
+    }
 
-        let oppositeOption = event.target.value == "over" ? document.getElementById(`${event.target.name}-under`) : document.getElementById(`${event.target.name}-over`);
-
-        oppositeOption.checked = false;
-
-        if(helperCounter.includes(event.target.name)) {
-            let removeDupeEntry = helperCounter.filter((entry) => entry != event.target.name);
-            helperCounter = removeDupeEntry;
+    const overUnderHandler = (event) => {
+        if(event.target.type == "checkbox") {
+            let oppositeOption = event.target.value == "over" ? "under" : "over"; 
+            let selectedInput = document.querySelector(`input[name=${event.target.name}][value=${oppositeOption}]`);
+            selectedInput.checked = false;
+            helperCounter = document.querySelectorAll('input[type=checkbox]:checked').length;
             return true;
         }
 
-        helperCounter = [...helperCounter, event.target.name];
-    }
+        return false;
+    };
 </script>
 
-<form method="POST">
+<form method="POST" on:change={overUnderHandler}>
     <input hidden name="userId" value={userId} />
     <input hidden name="homeId" value={teams.home.id} />
     <input hidden name="awayId" value={teams.away.id} />
@@ -39,12 +39,12 @@
     <div class="m-4">
         <div class="text-slate-800 w-full bg-gray-100 rounded-lg p-6 text-4xl">
             <div class="flex">
-                <input class="font-bold w-10 text-center bg-transparent" name="homeScore" value={bet?.homeScore ? bet?.homeScore : 0} disabled={betLockDueDate} />
+                <input class="font-bold w-10 text-center bg-transparent" name="homeScore" on:focus={inputHandler} value={bet?.homeScore ? bet?.homeScore : 0} disabled={betLockDueDate} />
                 <div class="ml-2 flex font-thin w-full">{teams.home.name}</div>
                 <div class="">{teams.home.flag}</div>
             </div>
             <div class="flex">
-                <input class="font-bold w-10 text-center bg-transparent" name="awayScore" value={bet?.awayScore ? bet?.awayScore : 0} disabled={betLockDueDate} />
+                <input class="font-bold w-10 text-center bg-transparent" name="awayScore" on:focus={inputHandler} value={bet?.awayScore ? bet?.awayScore : 0} disabled={betLockDueDate} />
                 <span class="ml-2 flex font-thin w-full">{teams.away.name}</span>
                 <span class="">{teams.away.flag}</span>
             </div>
@@ -61,7 +61,6 @@
                             id="{score.name}-over"
                             value="over"
                             class="sr-only peer/over"
-                            on:click={eventHandler}
                             disabled={betLockDueDate}
                         />
                         <label
@@ -75,7 +74,6 @@
                             id="{score.name}-under"
                             value="under"
                             class={`sr-only peer/under`}
-                            on:click={eventHandler}
                             disabled={betLockDueDate}
                         />
                         <label
@@ -92,8 +90,8 @@
             {#if betLockDueDate}
                 Apostas encerradas
             {:else}
-                {#if helperCounter.length < 5}
-                    Faltam mais {5 - helperCounter.length} apostas
+                {#if helperCounter < 5}
+                    Faltam mais {5 - helperCounter} apostas
                 {:else}
                     Salvar
                 {/if}
