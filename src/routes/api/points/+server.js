@@ -1,7 +1,7 @@
 import { json, error } from "@sveltejs/kit";
 import { directus } from "$lib/db/directus";
 
-const REGULAR_SCORE = {
+export const REGULAR_SCORE = {
     BULLSEYE: 10,
     EXTRA_POINT: 6,
     DRAW: 4,
@@ -9,7 +9,7 @@ const REGULAR_SCORE = {
     WINNER_GOALS_LOSER: 4
 };
 
-const OVER_UNDER = [
+export const OVER_UNDER = [
     {
         NAME: 'yellowCards',
         LABEL: 'Cartões amarelos',
@@ -126,7 +126,7 @@ export async function POST({ request }) {
             let bet = [b.homeScore, b.awayScore];
             let match = [m.homeScore, m.awayScore];
 
-
+            console.log(`${requestMatch.homeId.name} x ${requestMatch.awayId.name}`);
             console.log(`bet: ${bet[0]} - ${bet[1]}`);
             console.log(`match: ${match[0]} - ${match[1]}`);
 
@@ -138,12 +138,12 @@ export async function POST({ request }) {
             // PLACAR EXATO ...................................................... +10
             if (String(match) == String(bet)) {
                 totalPoints += REGULAR_SCORE.BULLSEYE;
-                console.log("+10");
+                console.log("+10 exato");
 
                 // 3 GOLS DE DIFERENÇA ........................................... +6 
                 if (match.sort((a, b) => b - a).reduce((tot, num) => tot - num) >= 3) {
                     totalPoints += REGULAR_SCORE.EXTRA_POINT;
-                    console.log("+6");
+                    console.log("+6 ex_point");
                 }
                 // return totalPoints;
             }
@@ -151,7 +151,7 @@ export async function POST({ request }) {
             // EMPATE ............................................................ +4
             if (match[0] - match[1] == 0 && bet[0] - bet[1] == 0) {
                 totalPoints += REGULAR_SCORE.DRAW;
-                console.log("+4");
+                console.log("+4 draw");
             }
 
             // GOLS DO VENCEDOR .................................................. +6
@@ -169,7 +169,7 @@ export async function POST({ request }) {
 
                 if (b[winner] == m[winner] && b[winner] > b[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS;
-                    console.log("+6");
+                    console.log("+6 win_goals");
                 }
             }
 
@@ -179,13 +179,13 @@ export async function POST({ request }) {
                 let winner = "homeScore";
 
                 if (b[winner] > b[loser]) {
-                    totalPoints += 4;
+                    totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
                     console.log("+4 win");
                 }
 
-                if (b[loser] == m[loser]) {
+                if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
-                    console.log("+4 wingoal");
+                    console.log("+4 win_home_goal");
                 }
             }
 
@@ -194,13 +194,13 @@ export async function POST({ request }) {
                 let winner = "awayScore";
 
                 if (b[winner] > b[loser]) {
-                    totalPoints += 4;
+                    totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
                     console.log("+4 win");
                 }
 
-                if (b[loser] == m[loser]) {
+                if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
-                    console.log("+4 wingoal");
+                    console.log("+4 win_away_goal");
                 }
             }
 

@@ -3,7 +3,22 @@ import { error } from "@sveltejs/kit";
 
 export async function load({ params, url }) {
 
-    let filteredDay = url.searchParams.get('day')
+    let dateFrom = url.searchParams.get('dateFrom');
+    let dateTo = url.searchParams.get('dateTo');
+    let dateQuery = [];
+
+    const isoStringDate = new Date().toISOString();
+    const today = isoStringDate.slice(0, 10);
+
+    if(dateFrom == undefined) {
+        dateFrom = today
+    }
+
+    dateQuery.push({ matchId: { dateTime: { _gt: dateFrom } } });
+
+    if(dateTo != undefined) {
+        dateQuery.push({ matchId: { dateTime: { _lt: dateTo } } })
+    }
 
     try {
         let users = await directus.items('users').readByQuery({ limit: -1 });
@@ -13,13 +28,7 @@ export async function load({ params, url }) {
                 sum: ['totalPoints'],
             },
             groupBy: ['userId'],
-            filter: {
-                matchId: {
-                    dateTime: {
-                        _gt: filteredDay
-                    }
-                }
-            }
+            filter: { _and: dateQuery }
         });
 
         let newResults = [];

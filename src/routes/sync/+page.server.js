@@ -45,6 +45,7 @@ export const actions = {
             let syncedBets = await bets.filter(bet => bet.isSynced != true);
 
             if (syncedBets.length == 0) {
+                await avoidTooManyRequests("No bets pending to be synced");
                 return { count: syncedBets.length, results: syncedBets, success: true }
             }
 
