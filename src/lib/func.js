@@ -10,7 +10,7 @@ export const overUnderRules = {
     longRangeGoals: "Gols de fora da área"
 };
 
-export const REGULAR_SCORE = {
+export let REGULAR_SCORE = {
     BULLSEYE: 10,
     EXTRA_POINT: 6,
     DRAW: 4,
@@ -18,7 +18,7 @@ export const REGULAR_SCORE = {
     WINNER_GOALS_LOSER: 4
 };
 
-export const OVER_UNDER = [
+export let OVER_UNDER = [
     {
         NAME: 'yellowCards',
         LABEL: 'Cartões amarelos',

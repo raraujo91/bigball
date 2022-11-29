@@ -1,12 +1,13 @@
 <script>
     export let data;
     let { bet, match, teams } = data;
+    console.log(bet);
     import { user } from "$lib/stores/user";
     let userDidBet = bet.isUserBet ? true : false;
-    let userBetRing = bet.isUserBet ? "ring ring-indigo-500 ring-inset" : "";
+    let userBetRing = bet.userForgotBet ? "ring ring-rose-600 opacity-75" : bet.isUserBet ? "ring ring-indigo-500 ring-inset" : "";
 </script>
 
-<a href="/bets/{match.id}{$user}">
+<a href="/bets/{match.id}{$user}" class="{bet.userForgotBet ? "pointer-events-none" : ""}" >
     <div class="text-slate-800 w-full h-100 text-6xl bg-gray-100 hover:bg-gray-200 drop-shadow-lg {userBetRing} rounded-lg mt-4 mb-4 p-6">
         <div>
             <div class="text-xs font-bold flex justify-evenly">

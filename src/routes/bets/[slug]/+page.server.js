@@ -8,13 +8,6 @@ export async function load({ params, url, fetch }) {
         
         let requestTeams = await fetch('/api/teams');
         let teams = await requestTeams.json();
-        
-        // let filteredBet = {};
-        // directus
-        //     .items('bets')
-        //     .readByQuery({ "_and": [{ "matchId": { "_eq": params.slug }, "userId": { "_eq": userId } }]})
-        //     .then(res => res == undefined ? filteredBet : filteredBet = res.data[0])
-        //     .catch(filteredBet);
 
         let filteredBet = await directus.items('bets').readByQuery({
             filter: {
@@ -34,8 +27,6 @@ export async function load({ params, url, fetch }) {
                 ]
             }
         });
-
-        console.log('fB', filteredBet);
 
         let filteredMatch = await directus.items('matches').readOne(params.slug);
         let filteredHomeTeam = teams.data.find(team => team.id == filteredMatch.homeId);
