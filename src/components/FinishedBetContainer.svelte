@@ -55,8 +55,7 @@
                 <div class="relative border border-slate-500 py-4">
                     <div class="flex items-center justify-evenly pb-4 uppercase">
                         {#if bet[score]}
-                            <span class="font-medium text-md pt-2">{bet[score]}</span>
-                            <span class="font-bold text-5xl">{scores.overUnder.find(overUnder => overUnder.name == score ).base}</span>
+                            <span class="font-bold text-5xl">{bet[score] == "over" ? "+" : "-"}{scores.overUnder.find(overUnder => overUnder.name == score ).base}</span>
                         {:else}
                             <span class="align-middle font-bold text-5xl">-</span>
                         {/if}
