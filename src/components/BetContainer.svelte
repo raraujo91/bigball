@@ -13,7 +13,8 @@
     $: betAmountValidation = helperCounter >= 5;
 
     const disableButton = (event) => {
-        event.target.disabled = true;
+        let button = document.querySelector("button[type=submit]");
+        return button.disabled = true;
     }
 
     const inputHandler = (event) => {
@@ -33,7 +34,7 @@
     };
 </script>
 
-<form method="POST" on:change={overUnderHandler}>
+<form method="POST" on:change={overUnderHandler} on:submit={disableButton}>
     <input hidden name="userId" value={userId} />
     <input hidden name="homeId" value={teams.home.id} />
     <input hidden name="awayId" value={teams.away.id} />
@@ -90,7 +91,7 @@
             {/each}
         {/if}
 
-        <button class="font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 mt-8" on:click={disableButton} disabled={!betAmountValidation}>
+        <button type="submit" class="font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 mt-8" disabled={!betAmountValidation}>
             {#if betLockDueDate}
                 Apostas encerradas
             {:else}
