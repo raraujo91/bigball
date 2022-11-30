@@ -12,8 +12,12 @@
     $: helperCounter = 0;
     $: betAmountValidation = helperCounter >= 5;
 
+    const disableButton = (event) => {
+        event.target.disabled = true;
+    }
+
     const inputHandler = (event) => {
-        event.target.value = ""
+        event.target.value = "";
     }
 
     const overUnderHandler = (event) => {
@@ -86,7 +90,7 @@
             {/each}
         {/if}
 
-        <button class="font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 mt-8" disabled={!betAmountValidation}>
+        <button class="font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 mt-8" on:click={disableButton} disabled={!betAmountValidation}>
             {#if betLockDueDate}
                 Apostas encerradas
             {:else}
