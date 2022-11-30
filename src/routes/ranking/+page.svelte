@@ -7,6 +7,9 @@
 </script>
 
 <div class="mt-8">
+    <div class="w-full flex justify-center pb-4">
+        <h2 class="text-3xl font-bold uppercase">Ranking Geral</h2>
+    </div>
     <table class="table-fixed w-full border border-slate-500">
         <thead>
             <tr class="bg-slate-600">
