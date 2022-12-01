@@ -10,6 +10,7 @@
     <div class="w-full flex justify-center pb-4">
         <h2 class="text-3xl font-bold uppercase">Pé di Rato do dia</h2>
     </div>
+    {#if orderedRanking.length == 5}
     <table class="table-fixed w-full border border-slate-500">
         <thead>
             <tr class="bg-slate-600">
@@ -34,4 +35,9 @@
             {/each}
         </tbody>
     </table>
+    {:else} 
+    <div class="w-full flex justify-center">
+        <h1>Aguardando todos apostarem...</h1>
+    </div>
+    {/if}
 </div>

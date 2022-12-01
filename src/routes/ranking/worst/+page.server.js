@@ -10,7 +10,7 @@ export async function load({ params, url }) {
 
     const isoStringDate = saoPauloTime;
     const today = isoStringDate.slice(0, 10);
-
+    
     if(dateFrom == undefined) {
         dateFrom = today
     }
