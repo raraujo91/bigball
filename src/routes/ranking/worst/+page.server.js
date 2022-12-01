@@ -1,5 +1,6 @@
 import { directus } from "$lib/db/directus"
 import { error } from "@sveltejs/kit";
+import { saoPauloTime } from "$lib/func";
 
 export async function load({ params, url }) {
 
@@ -7,7 +8,7 @@ export async function load({ params, url }) {
     let dateTo = url.searchParams.get('dateTo');
     let dateQuery = [];
 
-    const isoStringDate = new Date().toISOString();
+    const isoStringDate = saoPauloTime;
     const today = isoStringDate.slice(0, 10);
 
     if(dateFrom == undefined) {
