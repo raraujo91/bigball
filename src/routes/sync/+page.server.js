@@ -1,5 +1,5 @@
 import { directus } from "$lib/db/directus";
-import { json } from "@sveltejs/kit";
+import { saoPauloTime } from "$lib/func";
 
 export async function load({ params, fetch }) {
 
@@ -24,7 +24,7 @@ export const actions = {
         let matchId = data.get('match');
         const avoidTooManyRequests = (msg) => {
             return new Promise(resolve => {
-                console.log(`[${new Date().toISOString()}] --- ${msg} ---`)
+                console.log(`[${saoPauloTime}] --- ${msg} ---`)
                 setTimeout(resolve, 200);
             });
         }

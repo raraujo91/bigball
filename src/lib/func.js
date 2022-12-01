@@ -1,6 +1,6 @@
-import { browser } from "$app/environment";
+import moment from "moment-timezone";
 
-export const overUnderRules = {
+export let overUnderRules = {
     yellowCards: "Cartões amarelos",
     redCards: "Cartões vermelhos",
     cornerKicks: "Escanteios",
@@ -70,16 +70,4 @@ export let OVER_UNDER = [
     }
 ];
 
-export function checkIfCached(endpoint) {
-
-    let cachedContent;
-
-    if(browser) {
-        cachedContent = window.localStorage.getItem(endpoint);
-        if(cachedContent != undefined) {
-            return cachedContent;
-        }
-    }
-
-    return false;
-}
+export let saoPauloTime = moment.utc().tz('America/Sao_Paulo').format();

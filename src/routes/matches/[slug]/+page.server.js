@@ -1,9 +1,9 @@
 import { directus } from "$lib/db/directus";
 import { error } from "@sveltejs/kit";
+import { saoPauloTime } from "$lib/func";
 
 export async function load({ params }) {
 
-    
     try {
         
         let result = {};
@@ -14,7 +14,7 @@ export async function load({ params }) {
 
         result = { match };
 
-        if(new Date().toISOString() > match.dateTime) {
+        if(saoPauloTime > match.dateTime) {
             let bets = await directus.items('bets').readByQuery({
                 fields: ['*.*'],
                 filter: {
@@ -30,7 +30,7 @@ export async function load({ params }) {
                 awayId: bets.data[0].awayId
             } }
     
-            if(new Date().toISOString() > bets.data[0].matchId.dateTime) {
+            if(saoPauloTime > bets.data[0].matchId.dateTime) {
                 Object.assign(result, {
                     bets: bets.data
                 })
