@@ -1,65 +1,8 @@
 import { json, error } from "@sveltejs/kit";
 import { directus } from "$lib/db/directus";
+import { OVER_UNDER_PLAYOFFS, OVER_UNDER_REGULAR, REGULAR_SCORE, saoPauloTime } from "$lib/func";
 
-export const REGULAR_SCORE = {
-    BULLSEYE: 10,
-    EXTRA_POINT: 6,
-    DRAW: 4,
-    WINNER_GOALS: 6,
-    WINNER_GOALS_LOSER: 4
-};
-
-export const OVER_UNDER = [
-    {
-        NAME: 'yellowCards',
-        LABEL: 'Cartões amarelos',
-        BASE: 2.5,
-        POINTS_OVER: 6,
-        POINTS_UNDER: 4
-    },
-    {
-        NAME: 'redCards',
-        LABEL: 'Cartões vermelhos',
-        BASE: 1.5,
-        POINTS_OVER: 8,
-        POINTS_UNDER: 6
-    },
-    {
-        NAME: 'cornerKicks',
-        LABEL: 'Escanteios',
-        BASE: 8.5,
-        POINTS_OVER: 6,
-        POINTS_UNDER: 6
-    },
-    {
-        NAME: 'headerGoals',
-        LABEL: 'Gols de cabeça',
-        BASE: 1.5,
-        POINTS_OVER: 6,
-        POINTS_UNDER: 6
-    },
-    {
-        NAME: 'freeKickGoals',
-        LABEL: 'Gols de falta',
-        BASE: 1.5,
-        POINTS_OVER: 8,
-        POINTS_UNDER: 6
-    },
-    {
-        NAME: 'longRangeGoals',
-        LABEL: 'Gols de fora da área',
-        BASE: 1.5,
-        POINTS_OVER: 4,
-        POINTS_UNDER: 4
-    },
-    {
-        NAME: 'penaltyKickGoals',
-        LABEL: 'Gols de pênalti',
-        BASE: 1.5,
-        POINTS_OVER: 8,
-        POINTS_UNDER: 6
-    }
-];
+let OVER_UNDER = saoPauloTime > "2022-12-03T00:00:00" ? OVER_UNDER_PLAYOFFS : OVER_UNDER_REGULAR;
 
 export async function GET() {
 
@@ -113,7 +56,6 @@ export async function POST({ request }) {
         let requestBet = await directus.items('bets').readByQuery({
             filter: { "_and": [{ "matchId": { "_eq": matchId }, "userId": { "_eq": userId } }] }
         });
-
 
         let bet = await requestBet.data[0];
         let match = await requestMatch;

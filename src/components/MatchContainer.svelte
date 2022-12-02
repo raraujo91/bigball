@@ -1,11 +1,10 @@
 <script>
     export let match;
-    console.log(match);
     import { overUnderRules } from "$lib/func";
 </script>
 
 <div class="m-4">
-    <div class="text-slate-800 w-full bg-gray-100 rounded-lg p-6 text-4xl">
+    <div class="text-slate-800 w-full bg-gray-100 rounded-lg p-6 text-3xl">
         <div class="flex">
             <div class="font-bold">{match.homeScore}</div>
             <div class="ml-2 flex font-thin w-full">{match.homeId.name}</div>

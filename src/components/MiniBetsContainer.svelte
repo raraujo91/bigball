@@ -1,6 +1,8 @@
 <script>
-    import { OVER_UNDER } from "$lib/func";
+    import { OVER_UNDER_PLAYOFFS, OVER_UNDER_REGULAR, saoPauloTime } from "$lib/func";
     export let bets;
+
+    let OVER_UNDER = saoPauloTime > "2022-12-03T00:00:00" ? OVER_UNDER_PLAYOFFS : OVER_UNDER_REGULAR;
 
     function getBaseValue(bet, rule) {
         const ruleOverUnder = OVER_UNDER.find(OU => OU.NAME == rule);
