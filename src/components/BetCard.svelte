@@ -1,7 +1,6 @@
 <script>
     export let data;
     let { bet, match, teams } = data;
-    console.log(bet);
     import { user } from "$lib/stores/user";
     let userDidBet = bet.isUserBet ? true : false;
     let userBetRing = bet.userForgotBet ? "ring ring-rose-600 opacity-75" : bet.isUserBet ? "ring ring-indigo-500 ring-inset" : "";

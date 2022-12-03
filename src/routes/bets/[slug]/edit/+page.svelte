@@ -1,6 +1,6 @@
 <script>
-    import BetContainer from "../../../../components/BetContainer.svelte";
+    import EditBetContainer from "../../../../components/EditBetContainer.svelte";
     export let data;
 </script>
 
-<BetContainer data={data} />
+<EditBetContainer data={data} />

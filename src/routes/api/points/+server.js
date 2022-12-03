@@ -1,8 +1,8 @@
 import { json, error } from "@sveltejs/kit";
 import { directus } from "$lib/db/directus";
-import { OVER_UNDER_PLAYOFFS, OVER_UNDER_REGULAR, REGULAR_SCORE, saoPauloTime } from "$lib/func";
+import { OVER_UNDER_PLAYOFFS, REGULAR_SCORE } from "$lib/func";
 
-let OVER_UNDER = saoPauloTime > "2022-12-03T00:00:00" ? OVER_UNDER_PLAYOFFS : OVER_UNDER_REGULAR;
+let OVER_UNDER = OVER_UNDER_PLAYOFFS;
 
 export async function GET() {
 

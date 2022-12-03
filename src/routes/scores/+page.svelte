@@ -44,12 +44,11 @@
             {#each overUnderRules as rule}
                 <tr class="text-center border border-slate-500">
                     <td rowspan="2">{rule.label}</td>
-                    <td class="border border-slate-500">👍</td>
+                    <td rowspan="2" class="border border-slate-500">{rule.base}</td>
                     <td class="border border-slate-500 text-green-500 font-bold">{rule.overPoints}</td>
                     <td class="text-green-500 font-bold">{rule.underPoints}</td>
                 </tr>
                 <tr class="text-center">
-                    <td class="border border-slate-500">👎</td>
                     <td class="border border-slate-500 text-red-300 font-bold">{(-rule.overPoints / 2)}</td>
                     <td class="text-red-300 font-bold">{(-rule.underPoints / 2 )}</td>
                 </tr>
