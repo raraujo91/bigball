@@ -30,14 +30,14 @@
     </div>
     <div class="mt-4 w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 flex justify-center text-center">
         {#if match.finished}
-            <div class="cursor-pointer bg-slate-100 text-slate-900 border border-slate-100 py-4">
+            <div class="bg-slate-100 text-slate-900 border border-slate-100 py-4">
                 <div class="text-5xl font-bold pb-4">{points.totalPoints}</div>
                 <div class="text-xs font-bold uppercase">pontuação total</div>
             </div>
         {/if}
         {#each Object.keys(overUnderRules) as score}
             {#if match.finished}
-                <div class="cursor-pointer relative border border-slate-500 py-4">
+                <div class="relative border border-slate-500 py-4">
                     <div class="text-5xl font-bold pb-4">{match[score]}</div>
                     <div class="text-xs font-bold uppercase">
                         {scores.overUnder.find((point) => point.name == score).label}
@@ -49,7 +49,7 @@
                     {/if}
                 </div>
             {:else}
-                <button class="cursor-pointer relative border border-slate-500 py-4">
+                <button class="relative border border-slate-500 py-4">
                     <div class="flex items-center justify-evenly pb-4 uppercase">
                         {#if bet[score]}
                             <span class="font-bold text-5xl">{bet[score] == "over" ? "+" : "-"}{scores.overUnder.find(overUnder => overUnder.name == score ).base}</span>

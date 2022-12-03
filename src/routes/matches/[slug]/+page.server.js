@@ -22,19 +22,11 @@ export async function load({ params }) {
             }
         });
 
-        result = { 
-        
-            match: {
-                ...bets.data[0].matchId,
-                homeId: bets.data[0].homeId,
-                awayId: bets.data[0].awayId },
-            bets: {}
-
+        if(bets.data.length == 0) {    
+            Object.assign(result, {
+                bets: bets.data
+            });
         }
-
-        Object.assign(result, {
-            bets: bets.data
-        });
 
         return { result }
     } catch (err) {
