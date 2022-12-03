@@ -22,7 +22,7 @@ export async function load({ params }) {
             }
         });
 
-        if(bets.data.length == 0) {    
+        if(bets.data.length != 0) {    
             Object.assign(result, {
                 bets: bets.data
             });
