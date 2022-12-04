@@ -10,6 +10,8 @@
     
     let overUnderScores = scores.overUnder; 
 
+    console.log(overUnderScores);
+
     const disableButton = () => {
         let button = document.querySelector("button[type=submit]");
         return button.disabled = true;
@@ -24,7 +26,6 @@
             let oppositeOption = event.target.value == "over" ? "under" : "over"; 
             let selectedInput = document.querySelector(`input[name=${event.target.name}][value=${oppositeOption}]`);
             selectedInput.checked = false;
-            helperCounter = document.querySelectorAll('input[type=checkbox]:checked').length;
             return true;
         }
 
@@ -35,7 +36,6 @@
         overUnderScores.map(score => { 
             let getCheckbox = document.querySelector(`input[name=${score.name}][value=${bet[score.name]}]`);
             getCheckbox.checked = true;
-            helperCounter = document.querySelectorAll('input[type=checkbox]:checked').length;
         });
     })
 </script>
