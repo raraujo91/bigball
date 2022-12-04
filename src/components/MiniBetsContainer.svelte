@@ -7,7 +7,6 @@
     function getBaseValue(bet, rule) {
         const ruleOverUnder = OVER_UNDER.find(OU => OU.NAME == rule);
         const checkOverUnder = bet.matchId[rule] > ruleOverUnder.BASE ? "over" : "under";
-        console.log(bet.userId.name, ":", ruleOverUnder, "<", ruleOverUnder.BASE);
         return checkOverUnder;
     }
 
@@ -34,7 +33,7 @@
         </div>
         <div class="w-full py-2 text-center text-lg font-bold">
             {#each Object.keys(BET_ICONS) as icon}
-                <span class="{bet.matchId.finished == false ? "bg-slate-700 border-slate-100 text-slate-100" : getBaseValue(bet, icon) == bet[icon] ? "bg-emerald-500 border-emerald-900" : "bg-red-500 border-red-900"} inline-flex items-baseline align-middle my-1 mx-1 px-2 border rounded-full">
+                <span class="{bet.matchId.finished == false || bet[icon] == null ? "bg-slate-700 border-slate-100 text-slate-100" : getBaseValue(bet, icon) == bet[icon] ? "bg-emerald-500 border-emerald-900" : "bg-red-500 border-red-900"} inline-flex items-baseline align-middle my-1 mx-1 px-2 border rounded-full">
                     {BET_ICONS[icon]} {bet[icon] == "over" ? "🔼" : bet[icon] == "under" ? "🔽" : "😴" } 
                 </span>
             {/each}
