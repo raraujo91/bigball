@@ -7,11 +7,6 @@
     
     let overUnderScores = scores.overUnder;
 
-    $: console.log(helperCounter);
-
-    $: helperCounter = 0;
-    $: betAmountValidation = helperCounter >= 5;
-
     const disableButton = (event) => {
         let button = document.querySelector("button[type=submit]");
         return button.disabled = true;
@@ -91,15 +86,11 @@
             {/each}
         {/if}
 
-        <button type="submit" class="font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 mt-8" disabled={!betAmountValidation}>
+        <button type="submit" class="font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 mt-8" disabled={betLockDueDate}>
             {#if betLockDueDate}
                 Apostas encerradas
             {:else}
-                {#if helperCounter < 5}
-                    Faltam mais {5 - helperCounter} apostas
-                {:else}
-                    Salvar
-                {/if}
+                Salvar
             {/if}
         </button> 
     </div>

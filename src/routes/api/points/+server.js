@@ -127,7 +127,7 @@ export async function POST({ request }) {
 
                 if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
-                    console.log("+4 win_home_goal");
+                    console.log("+4 win_home_loser_goals");
                 }
             }
 
@@ -142,7 +142,7 @@ export async function POST({ request }) {
 
                 if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
-                    console.log("+4 win_away_goal");
+                    console.log("+4 win_away_loser_goals");
                 }
             }
 
@@ -171,6 +171,7 @@ export async function POST({ request }) {
                 if (m[entry] == b[entry]) {
                     if (b[entry] == "over") {
                         let overUnderValues = OVER_UNDER.find(RULE => RULE.NAME == entry)
+                        console.log(`${entry}: +${overUnderValues.POINTS_OVER}`)
                         return Object.assign(matchBet, {
                             [entry]: overUnderValues.POINTS_OVER
                         })
@@ -178,6 +179,7 @@ export async function POST({ request }) {
 
                     if (b[entry] == "under") {
                         let overUnderValues = OVER_UNDER.find(RULE => RULE.NAME == entry)
+                        console.log(`${entry}: +${overUnderValues.POINTS_UNDER}`)
                         return Object.assign(matchBet, {
                             [entry]: overUnderValues.POINTS_UNDER
                         })
@@ -187,6 +189,7 @@ export async function POST({ request }) {
                 if (m[entry] != b[entry]) {
                     if (b[entry] == "over") {
                         let overUnderValues = OVER_UNDER.find(RULE => RULE.NAME == entry)
+                        console.log(`${entry}: ${-overUnderValues.POINTS_OVER / 2}`)
                         return Object.assign(matchBet, {
                             [entry]: (-overUnderValues.POINTS_OVER / 2)
                         })
@@ -194,6 +197,7 @@ export async function POST({ request }) {
 
                     if (b[entry] == "under") {
                         let overUnderValues = OVER_UNDER.find(RULE => RULE.NAME == entry)
+                        console.log(`${entry}: ${-overUnderValues.POINTS_UNDER / 2}`)
                         return Object.assign(matchBet, {
                             [entry]: (-overUnderValues.POINTS_UNDER / 2)
                         })
