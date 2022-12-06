@@ -27,6 +27,16 @@
                 <a href="/bets/{id}/edit?user={user}" class="flex items-center justify-center font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 text-slate-100">Editar</a>
             {/if}
         </div>
+        {#if match.finished}
+            <div class="w-full mt-6">
+                {#each points.conditions as condition}
+                    <div class="w-full flex justify-between text-sm">
+                        <span>{condition.rule}</span>
+                        <span class="font-bold">{condition.score}</span>
+                    </div>
+                {/each}
+            </div>
+        {/if}
     </div>
     <div class="mt-4 w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 flex justify-center text-center">
         {#if match.finished}

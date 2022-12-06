@@ -52,7 +52,10 @@ export async function POST({ request }) {
     try {
         let { matchId, userId } = await request.json();
 
-        let requestMatch = await directus.items('matches').readOne(matchId);
+        let requestMatch = await directus.items('matches').readOne(matchId, {
+            fields: ['*.*']
+        });
+        
         let requestBet = await directus.items('bets').readByQuery({
             filter: { "_and": [{ "matchId": { "_eq": matchId }, "userId": { "_eq": userId } }] }
         });
@@ -64,6 +67,7 @@ export async function POST({ request }) {
         const matchScoreAnalysis = (m, b) => {
             let result = "";
             let totalPoints = 0;
+            let scoreDetails = [];
 
             let bet = [b.homeScore, b.awayScore];
             let match = [m.homeScore, m.awayScore];
@@ -80,11 +84,13 @@ export async function POST({ request }) {
             // PLACAR EXATO ...................................................... +10
             if (String(match) == String(bet)) {
                 totalPoints += REGULAR_SCORE.BULLSEYE;
+                scoreDetails.push({ rule: "Placar exato", score: REGULAR_SCORE.BULLSEYE }); 
                 console.log("+10 exato");
 
                 // 3 GOLS DE DIFERENÇA ........................................... +6 
                 if (match.sort((a, b) => b - a).reduce((tot, num) => tot - num) >= 3) {
                     totalPoints += REGULAR_SCORE.EXTRA_POINT;
+                    scoreDetails.push({ rule: "+3 gols de diferença", score: REGULAR_SCORE.EXTRA_POINT });
                     console.log("+6 ex_point");
                 }
                 // return totalPoints;
@@ -93,6 +99,7 @@ export async function POST({ request }) {
             // EMPATE ............................................................ +4
             if (match[0] - match[1] == 0 && bet[0] - bet[1] == 0) {
                 totalPoints += REGULAR_SCORE.DRAW;
+                scoreDetails.push({ rule: "Empate", score: REGULAR_SCORE.DRAW });
                 console.log("+4 draw");
             }
 
@@ -111,6 +118,7 @@ export async function POST({ request }) {
 
                 if (b[winner] == m[winner] && b[winner] > b[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS;
+                    scoreDetails.push({ rule: "Gols do vencedor", score: REGULAR_SCORE.WINNER_GOALS });
                     console.log("+6 win_goals");
                 }
             }
@@ -121,12 +129,14 @@ export async function POST({ request }) {
                 let winner = "homeScore";
 
                 if (b[winner] > b[loser]) {
-                    totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
+                    totalPoints += REGULAR_SCORE.WINNER;
+                    scoreDetails.push({ rule: "Vencedor", score: REGULAR_SCORE.WINNER });
                     console.log("+4 win");
                 }
 
                 if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
+                    scoreDetails.push({ rule: "Gols do time perdedor", score: REGULAR_SCORE.WINNER_GOALS_LOSER });
                     console.log("+4 win_home_loser_goals");
                 }
             }
@@ -136,17 +146,19 @@ export async function POST({ request }) {
                 let winner = "awayScore";
 
                 if (b[winner] > b[loser]) {
-                    totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
+                    totalPoints += REGULAR_SCORE.WINNER;
+                    scoreDetails.push({ rule: "Vencedor", score: REGULAR_SCORE.WINNER });
                     console.log("+4 win");
                 }
 
                 if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
+                    scoreDetails.push({ rule: "Gols do time perdedor", score: REGULAR_SCORE.WINNER_GOALS_LOSER });
                     console.log("+4 win_away_loser_goals");
                 }
             }
 
-            return totalPoints;
+            return { totalPoints, scoreDetails };
         }
 
         /* Match data transformation from numbers to over/under values */
@@ -213,8 +225,9 @@ export async function POST({ request }) {
         let overUnderPoints = overUnderComparison(matchResults, bet);
 
         return new json({
-            score: scorePoints,
-            totalPoints: scorePoints + Object.values(overUnderPoints).reduce((t, n) => t + n),
+            score: scorePoints.totalPoints,
+            conditions: scorePoints.scoreDetails,
+            totalPoints: scorePoints.totalPoints + Object.values(overUnderPoints).reduce((t, n) => t + n),
             overUnderPoints
         });
     } catch (err) {

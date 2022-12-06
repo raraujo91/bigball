@@ -15,9 +15,10 @@ export let overUnderRules = {
 export let REGULAR_SCORE = {
     BULLSEYE: 10,
     EXTRA_POINT: 6,
-    DRAW: 6,
+    DRAW: 8,
     WINNER_GOALS: 6,
-    WINNER_GOALS_LOSER: 4
+    WINNER_GOALS_LOSER: 4,
+    WINNER: 4
 };
 
 export let OVER_UNDER_REGULAR = [
