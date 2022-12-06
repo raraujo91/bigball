@@ -39,12 +39,6 @@
         {/if}
     </div>
     <div class="mt-4 w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 flex justify-center text-center">
-        {#if match.finished}
-            <div class="bg-slate-100 text-slate-900 border border-slate-100 py-4">
-                <div class="text-5xl font-bold pb-4">{points.totalPoints}</div>
-                <div class="text-xs font-bold uppercase">pontuação total</div>
-            </div>
-        {/if}
         {#each Object.keys(overUnderRules) as score}
             {#if match.finished}
                 <div class="relative border border-slate-500 py-4">
@@ -78,5 +72,11 @@
                 </button>
             {/if}
         {/each}
+        {#if match.finished}
+            <div class="bg-slate-100 text-slate-900 border border-slate-100 py-4">
+                <div class="text-5xl font-bold pb-4">{points.totalPoints}</div>
+                <div class="text-xs font-bold uppercase">pontuação total</div>
+            </div>
+        {/if}
     </div>
 </div>
