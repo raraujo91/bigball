@@ -27,7 +27,7 @@
                 <a href="/bets/{id}/edit?user={user}" class="flex items-center justify-center font-bold rounded-full uppercase bg-orange-600 disabled:bg-slate-400 disabled:text-slate-900 hover:bg-orange-800 w-full h-10 text-slate-100">Editar</a>
             {/if}
         </div>
-        {#if match.finished}
+        {#if match.finished && points.conditions.length > 0}
             <div class="w-full mt-6">
                 {#each points.conditions as condition}
                     <div class="w-full flex justify-between text-sm">
