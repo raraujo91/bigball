@@ -103,9 +103,10 @@ export async function POST({ request }) {
                 console.log("+4 draw");
             }
 
-            // GOLS DO VENCEDOR .................................................. +6
             if (result == "home" || result == "away") {
+
                 let winner, loser;
+
                 if (result == "home") {
                     winner = "homeScore";
                     loser = "awayScore";
@@ -116,45 +117,48 @@ export async function POST({ request }) {
                     loser = "homeScore";
                 };
 
+                // GOLS DO VENCEDOR .................................................. +6
                 if (b[winner] == m[winner] && b[winner] > b[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS;
                     scoreDetails.push({ rule: "Gols do vencedor", score: REGULAR_SCORE.WINNER_GOALS });
                     console.log("+6 win_goals");
                 }
-            }
-
-            // VENCEDOR E GOLS DO PERDEDOR ....................................... +4
-            if (result == "home") {
-                let loser = "awayScore";
-                let winner = "homeScore";
-
+                
+                // VENCEDOR .......................................................... +4
                 if (b[winner] > b[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER;
                     scoreDetails.push({ rule: "Vencedor", score: REGULAR_SCORE.WINNER });
                     console.log("+4 win");
                 }
-
+    
+                // GOLS DO PERDEDOR .................................................. +4
                 if (b[winner] > b[loser] && b[loser] == m[loser]) {
                     totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
                     scoreDetails.push({ rule: "Gols do time perdedor", score: REGULAR_SCORE.WINNER_GOALS_LOSER });
                     console.log("+4 win_home_loser_goals");
                 }
+    
+    
             }
 
-            if (result == "away") {
-                let loser = "homeScore";
-                let winner = "awayScore";
+            let userBet = bet[0] > bet[1] ? "home" : bet[1] > bet[0] ? "away" : false;
 
-                if (b[winner] > b[loser]) {
-                    totalPoints += REGULAR_SCORE.WINNER;
-                    scoreDetails.push({ rule: "Vencedor", score: REGULAR_SCORE.WINNER });
-                    console.log("+4 win");
+            // VENCEDOR APÓS 90 MINS ............................................. +4
+            if (result == "draw" && !!userBet) {
+                if (requestMatch.overtime) {
+                    if (requestMatch.overtimeWinner.id == requestMatch[`${userBet}Id`]["id"]) {
+                        totalPoints += REGULAR_SCORE.WINNER;
+                        scoreDetails.push({ rule: "Vencedor (tempo-extra)", score: REGULAR_SCORE.WINNER });
+                        console.log("+4 ot_winner");
+                    }
                 }
 
-                if (b[winner] > b[loser] && b[loser] == m[loser]) {
-                    totalPoints += REGULAR_SCORE.WINNER_GOALS_LOSER;
-                    scoreDetails.push({ rule: "Gols do time perdedor", score: REGULAR_SCORE.WINNER_GOALS_LOSER });
-                    console.log("+4 win_away_loser_goals");
+                if (requestMatch.penaltyKicks) {
+                    if (requestMatch.penaltyKickWinner.id == requestMatch[`${userBet}Id`]["id"]) {
+                        totalPoints += REGULAR_SCORE.WINNER;
+                        scoreDetails.push({ rule: "Vencedor (pênaltis)", score: REGULAR_SCORE.WINNER });
+                        console.log("+4 pk_winner");
+                    }
                 }
             }
 

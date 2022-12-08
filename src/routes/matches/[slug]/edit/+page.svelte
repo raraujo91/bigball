@@ -45,11 +45,11 @@
         </div>
         <div class="grid grid-cols-2 flex justify-center text-center py-4">
             <div>
-                <div class="font-bold text-lg">{match.homeId.name}</div>
+                <div class="font-bold text-lg">({match.homeId.id}) {match.homeId.name}</div>
                 <input class="w-24 h-24 text-slate-900 text-center text-6xl rounded-lg" name="homeScore" type="text" value="{match.homeScore}"/>
             </div>
             <div>
-                <div class="font-bold text-lg">{match.awayId.name}</div>
+                <div class="font-bold text-lg">({match.awayId.id}) {match.awayId.name}</div>
                 <input class="w-24 h-24 text-slate-900 text-center text-6xl rounded-lg" name="awayScore" type="text" value="{match.awayScore}"/>
             </div>
         </div>
@@ -70,14 +70,14 @@
                 {/each}
             </div>
     </div>
-    <div class="uppercase text-sm">
+    <div class="px-4 w-full uppercase text-sm flex flex-col justify-center items-center">
         {#if checkboxFields.overtime}
-            <div id="ruleLabel">{checkboxLabels("overtimeWinner")}</div>
-            <input type="text" name="overtimeWinner" id="overtimeWinner" value="" />
+            <div class="pb-1" id="ruleLabel">{checkboxLabels("overtimeWinner")}</div>
+            <input class="text-slate-900 w-10 h-10" type="text" name="overtimeWinner" id="overtimeWinner" value="{overtimeWinner.id}" />
         {/if}
         {#if checkboxFields.penaltyKicks}
-            <div id="ruleLabel">{checkboxLabels("penaltyKickWinner")}</div>
-            <input type="text" name="penaltyKickWinner" id="penaltyKickWinner" value="" />
+            <div class="pb-1" id="ruleLabel">{checkboxLabels("penaltyKickWinner")}</div>
+            <input class="text-slate-900 w-10 h-10 text-2xl text-center" type="text" name="penaltyKickWinner" id="penaltyKickWinner" value="{penaltyKickWinner.id}" />
         {/if}
     </div>
     <div class="w-full text-2xl flex justify-center items-center align-middle uppercase mt-6">
