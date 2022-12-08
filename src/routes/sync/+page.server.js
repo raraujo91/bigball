@@ -46,7 +46,7 @@ export const actions = {
 
             if (syncedBets.length == 0) {
                 await avoidTooManyRequests("No bets pending to be synced");
-                return { count: syncedBets.length, results: syncedBets, success: true }
+                return { matchId, count: syncedBets.length, results: syncedBets, success: true }
             }
 
             let requestUsers = await directus.items('users').readByQuery({ limit: -1 });

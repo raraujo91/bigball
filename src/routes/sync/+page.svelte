@@ -1,13 +1,21 @@
 <script>
     export let data, form;
     let { matches } = data;
+    
+    const setSelectedMatch = () => {
+        if(!form?.matchId) {
+            return matches.data.length - 1;
+        }
+
+        return Number(form?.matchId) - 1;
+    }
 </script>
 
 <div class="w-full m-auto flex justify-center">
     <form method="POST">
-        <select name="match" id="match" class="w-full h-14 rounded-lg text-slate-900 text-xl text-center">
+        <select name="match" id="match" class="w-full h-14 rounded-lg text-slate-900 text-lg text-center">
             {#each matches.data as match, id}
-                <option value={match.id} selected={id == matches.data.length - 1 ? true : false}>
+                <option value={match.id} selected={id == setSelectedMatch() ? true : false}>
                     Jogo #{match.id} | {match.homeId.name} vs {match.awayId.name}
                 </option>
             {/each}
