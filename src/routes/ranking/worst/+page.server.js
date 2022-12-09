@@ -32,6 +32,21 @@ export async function load({ params, url }) {
             filter: { _and: dateQuery }
         });
 
+        let worstResults = await directus.items('bets').readByQuery(
+            {
+                fields: ['*.*'],
+                sort: ['totalPoints'],
+                limit: 3,
+                filter: {
+                    matchId: {
+                        finished: true
+                    }
+                }
+            }
+        );
+
+        console.log(worstResults);
+
         let newResults = [];
         
         users.data.map(user => results.data.filter(result => {
@@ -45,7 +60,7 @@ export async function load({ params, url }) {
         }))
 
 
-        return { results: newResults }
+        return { results: newResults, worst: worstResults.data }
     } catch (err) {
         console.log(err.errors);
         throw new error(err.errors);

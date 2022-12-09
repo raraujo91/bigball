@@ -23,6 +23,29 @@ export async function load() {
             }
         );
 
+        let countFinishedMatches = await directus.items('matches').readByQuery(
+            {
+                aggregate: {
+                    count: ['finished']
+                }
+            }
+        );
+
+        let bestResults = await directus.items('bets').readByQuery(
+            {
+                fields: ['*.*'],
+                sort: ['-totalPoints'],
+                limit: 3,
+                filter: {
+                    matchId: {
+                        finished: true
+                    }
+                }
+            }
+        );
+
+        let finishedMatches = countFinishedMatches.data[0].count.finished;
+
         let createRanking = [];
         
         users.data.map((user) => {
@@ -36,7 +59,7 @@ export async function load() {
 
         console.log(createRanking);
 
-        return { ranking: createRanking }
+        return { ranking: createRanking, matches: finishedMatches, best: bestResults.data }
 
     } catch (err) {
 

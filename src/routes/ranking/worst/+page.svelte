@@ -1,7 +1,7 @@
 <script>
     export let data;
     
-    let { results } = data;
+    let { results, worst } = data;
 
     let orderedRanking = results.sort((a, b) => a.totalPoints - b.totalPoints);
 </script>
@@ -40,4 +40,18 @@
         <h1>Aguardando todos apostarem...</h1>
     </div>
     {/if}
+    <div class="w-full flex justify-center pb-4">
+        <h2 class="text-3xl font-bold uppercase mt-6">Piores apostas</h2>
+    </div>
+    <table class="table-fixed w-full border border-slate-500">
+        <tbody>
+            {#each worst as bet}
+                <tr class="text-center border border-slate-500">
+                    <td>{bet.userId.name}</td>
+                    <td class="text-2xl inline-block align-middle w-full">{bet.homeId.flag} x {bet.awayId.flag}</td>
+                    <td class="font-bold w-16">{bet.totalPoints}</td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>    
 </div>

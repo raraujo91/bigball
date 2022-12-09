@@ -23,7 +23,7 @@
                 <tr class="text-center border border-slate-500 {id == 0 ? "bg-slate-700 text-2xl font-bold" : ""}">
                     <td>
                         {#if id == 0}
-                            🏆
+                            🎯
                         {:else}
                             {id+1}
                         {/if} 
