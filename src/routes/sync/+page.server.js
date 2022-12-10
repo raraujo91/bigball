@@ -1,5 +1,6 @@
 import { directus } from "$lib/db/directus";
 import { saoPauloTime } from "$lib/func";
+import { error } from "@sveltejs/kit";
 
 export async function load({ params, fetch }) {
 
@@ -12,8 +13,7 @@ export async function load({ params, fetch }) {
         return { matches: listMatches };
 
     } catch (err) {
-        console.log(err);
-
+        throw new error(500, err);
     }
 }
 
@@ -77,7 +77,7 @@ export const actions = {
             return { matchId, count: syncedBets.length, results: sortedResults, success: true };
 
         } catch (err) {
-            console.log(err);
+            throw new error(500, err);
         }
     }
 }

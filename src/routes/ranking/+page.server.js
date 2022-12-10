@@ -51,7 +51,6 @@ export async function load() {
         users.data.map((user) => {
             sumAllBets.data.filter((point) => {
                 if(user.id == point.userId) {
-                     console.log({ ...user, totalPoints: point.sum.totalPoints });
                     createRanking.push({ ...user, totalPoints: point.sum.totalPoints })
                 }
             })

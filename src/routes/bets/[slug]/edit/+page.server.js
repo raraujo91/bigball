@@ -55,9 +55,7 @@ export const actions = {
 
         let { userId, betId, ...rest } = json;
 
-        const betToEdit = await directus.items('bets').updateOne(betId, rest);
-
-        console.log(betToEdit);
+        await directus.items('bets').updateOne(betId, rest);
 
         throw redirect(303, `/bets?user=${userId}`);
     }

@@ -45,8 +45,6 @@ export async function load({ params, url }) {
             }
         );
 
-        console.log(worstResults);
-
         let newResults = [];
         
         users.data.map(user => results.data.filter(result => {
@@ -62,7 +60,6 @@ export async function load({ params, url }) {
 
         return { results: newResults, worst: worstResults.data }
     } catch (err) {
-        console.log(err.errors);
         throw new error(err.errors);
     }
 

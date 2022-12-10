@@ -14,7 +14,6 @@ export async function load() {
 
         return { teams: requestActiveTeams.data };
     } catch(err) {
-        console.log("Error:", err);
         throw new error(500, err);
     }
 }

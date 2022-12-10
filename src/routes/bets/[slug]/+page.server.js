@@ -94,7 +94,7 @@ export const actions = {
             await directus.items('bets').createOne(formattedJson);
         } catch(err) {
             let { errors } = err;
-            console.log(errors);
+            throw new error(errors);
         }
 
         throw redirect(303, `/bets?user=${data.get('userId')}`);

@@ -34,11 +34,8 @@ export async function load() {
             })
         })
 
-        console.log(result);
-
         return { ranking: result };
     } catch(err) {
-        console.log(err);
         throw new error(500, err.errors)
     }
 

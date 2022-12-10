@@ -19,9 +19,7 @@
         penaltyKicks: Boolean(penaltyKicks),
         finished: Boolean(finished)
     }
-
-    $: console.log(checkboxFields);
-
+    
     const checkboxLabels = (field) => {
         switch(field) {
             case 'isPlayoff':
