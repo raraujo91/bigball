@@ -56,8 +56,6 @@ export async function load() {
             })
         });
 
-        console.log(createRanking);
-
         return { ranking: createRanking, matches: finishedMatches, best: bestResults.data }
 
     } catch (err) {

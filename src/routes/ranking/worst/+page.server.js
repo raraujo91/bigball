@@ -38,9 +38,18 @@ export async function load({ params, url }) {
                 sort: ['totalPoints'],
                 limit: 3,
                 filter: {
-                    matchId: {
-                        finished: true
-                    }
+                    _and: [
+                        {
+                            matchId: {
+                                finished: true
+                            }
+                        },
+                        {
+                            totalPoints: {
+                                _gt: 0
+                            }
+                        }
+                    ]
                 }
             }
         );
