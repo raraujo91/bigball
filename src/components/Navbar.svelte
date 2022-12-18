@@ -6,16 +6,15 @@
 
    $: isActive = ( activePath ) => {
         if($active.route.id.includes(activePath)) {
-            return "w-full block py-5 px-3 text-center bg-slate-700 text-yellow-500"
+            return "w-full block py-5 px-3 text-center bg-red-900 text-yellow-500"
         } else {
-            return "w-full block py-5 px-3 text-center hover:bg-slate-700";
+            return "w-full block py-5 px-3 text-center hover:bg-red-900";
         }
     }
 
-    // console.log($active);
 </script>
 
-<div class="fixed bottom-0 inset-x-0 flex justify-evenly bg-slate-500 uppercase text-xs font-bold">
+<div class="fixed bottom-0 inset-x-0 flex justify-evenly bg-red-700 uppercase text-xs font-bold">
     <a href="/ranking{$user}" class={isActive('ranking')}>
         <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto icon icon-tabler icon-tabler-trophy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

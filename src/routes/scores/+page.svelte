@@ -9,7 +9,7 @@
     </div>
     <table class="table-auto w-full border border-slate-500">
         <thead>
-            <tr class="bg-slate-600">
+            <tr class="bg-slate-700">
                 <th>Regra</th>
                 <th>&nbsp;</th>
                 <th>Pontos</th>
@@ -33,7 +33,7 @@
     </div>
     <table class="table-auto w-full border border-slate-500">
         <thead>
-            <tr class="bg-slate-600">
+            <tr class="bg-slate-700">
                 <th>Regra</th>
                 <th>&nbsp;</th>
                 <th>O</th>
@@ -48,7 +48,7 @@
                     <td class="border border-slate-500 text-green-500 font-bold">{rule.overPoints}</td>
                     <td class="text-green-500 font-bold">{rule.underPoints}</td>
                 </tr>
-                <tr class="text-center">
+                <tr class="text-center bg-slate-800">
                     <td class="border border-slate-500 text-red-300 font-bold">{(-rule.overPoints / 2)}</td>
                     <td class="text-red-300 font-bold">{(-rule.underPoints / 2 )}</td>
                 </tr>

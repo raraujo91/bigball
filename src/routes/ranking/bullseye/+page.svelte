@@ -12,7 +12,7 @@
     </div>
     <table class="table-fixed w-full border border-slate-500">
         <thead>
-            <tr class="bg-slate-600">
+            <tr class="bg-slate-800">
                 <th>&nbsp;</th>
                 <th>Nome</th>
                 <th>Pontos</th>
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             {#each orderedRanking as user, id}
-                <tr class="text-center border border-slate-500 {id == 0 ? "bg-slate-700 text-2xl font-bold" : ""}">
+                <tr class="text-center border border-slate-500 {id == 0 ? "bg-emerald-700 text-2xl font-bold" : ""}">
                     <td>
                         {#if id == 0}
                             🎯

@@ -13,7 +13,7 @@
     {#if orderedRanking.length == 5}
     <table class="table-fixed w-full border border-slate-500">
         <thead>
-            <tr class="bg-slate-600">
+            <tr class="bg-slate-800">
                 <th>&nbsp;</th>
                 <th>Nome</th>
                 <th>Pontos</th>
@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             {#each orderedRanking as user, id}
-                <tr class="text-center border border-slate-500 {id == 0 ? "bg-slate-700 text-2xl font-bold" : ""}">
+                <tr class="text-center border border-slate-500 {id == 0 ? "bg-emerald-700 text-2xl font-bold" : ""}">
                     <td>
                         {#if id == 0}
                             🐀
@@ -46,7 +46,7 @@
     <table class="table-fixed w-full border border-slate-500">
         <tbody>
             {#each worst as bet}
-                <tr class="text-center border border-slate-500">
+                <tr class="text-center border bg-slate-800 border-slate-500">
                     <td>{bet.userId.name}</td>
                     <td class="text-2xl inline-block align-middle w-full">{bet.homeId.flag} x {bet.awayId.flag}</td>
                     <td class="font-bold w-16">{bet.totalPoints}</td>
